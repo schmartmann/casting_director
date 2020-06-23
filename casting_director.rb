@@ -2,65 +2,59 @@ class CastingDirector
   attr_accessor :cast_list
   
   def initialize(actors, characters)
-    @actors = actors
-    @characters = characters
+    @actors = actors.shuffle
+    @characters = characters.shuffle
     @pairings = {}
-    @cast_list = {}
   end
 
-  def pair_each_actor_with_character
-    actors = @actors.shuffle
-    characters = @characters.shuffle
-    actors.each.with_index do | actor, index |
-        @pairings[actor] = characters[index]
-        characters.delete_at(index)
+  def pair_each_character_with_actor
+    while @characters.length > 0
+      @characters.each.with_index do |character, index|
+        random_actor = @actors.sample
+        is_cast = @pairings[random_actor]
+        if is_cast
+          number_parts = @pairings[random_actor].length
+          @pairings[random_actor].push(character)
+          # if number_parts <= 2
+          #   @pairings[random_actor].push(character)
+          # else
+          #   next
+          # end
+        else
+          @pairings[random_actor] = [character]
+        end
+        @characters.delete_at(index)
+      end
     end
   end
-
-  def build_cast_list
-    @pairings.each do |character, actor|
-      !@cast_list[actor] ?  @cast_list[actor] = [character] : @cast_list[actor].push(character)
-    end
-  end
-
-#   def refine_cast_list
-#     @actors.each do |actor|
-#     #   if @cast_list.includes(actor)
-#     end
-#   end
 
   def cast_parts
     pair_each_character_with_actor
-    build_cast_list
+    puts @pairings
   end
 end
 
-actors = [
-  'aysha',
-  'arndrea',
-  'colin',
-  'sandra',
-  'jessica'
-]
+# actors = [
+#   'aysha',
+#   'arndrea',
+#   'colin',
+#   'sandra',
+#   'jessica'
+# ]
 
-characters = [
-  'drew',
-  'aryana',
-  'ash', 
-  'axel', 
-  'jeff',
-  'kennedy',
-  'gabe',
-  'anthony',
-  'virginia',
-  'alex'
-]
+# characters = [
+#   'drew',
+#   'aryana',
+#   'ash', 
+#   'axel', 
+#   'jeff',
+#   'kennedy',
+#   'gabe',
+#   'anthony',
+#   'virginia',
+#   'alex'
+# ]
 
-casting_director = CastingDirector.new(actors, characters)
+# casting_director = CastingDirector.new(actors, characters)
 
-5.times do 
-    casting_director.pair_each_actor_with_character
-    # puts casting_director.pairings
-    # casting_director.cast_parts
-    # puts casting_director.cast_list
-end
+# casting_director.cast_parts
