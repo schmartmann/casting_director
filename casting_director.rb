@@ -15,46 +15,16 @@ class CastingDirector
         if is_cast
           number_parts = @pairings[random_actor].length
           @pairings[random_actor].push(character)
-          # if number_parts <= 2
-          #   @pairings[random_actor].push(character)
-          # else
-          #   next
-          # end
         else
           @pairings[random_actor] = [character]
         end
         @characters.delete_at(index)
       end
     end
+    @pairings
   end
 
   def cast_parts
     pair_each_character_with_actor
-    puts @pairings
   end
 end
-
-# actors = [
-#   'aysha',
-#   'arndrea',
-#   'colin',
-#   'sandra',
-#   'jessica'
-# ]
-
-# characters = [
-#   'drew',
-#   'aryana',
-#   'ash', 
-#   'axel', 
-#   'jeff',
-#   'kennedy',
-#   'gabe',
-#   'anthony',
-#   'virginia',
-#   'alex'
-# ]
-
-# casting_director = CastingDirector.new(actors, characters)
-
-# casting_director.cast_parts
