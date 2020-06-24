@@ -1,23 +1,27 @@
 require 'sinatra'
-require 'byebug' 
 require_relative 'casting_director'
 require './helpers/param_helper'
+
+if ENV['RACK-ENV'] == 'production'
+    require 'byebug'
+end
 
 include ParamHelper
 
 get '/' do
-    validate_params(params)
-    byebug
+    if validate_params(params)
+        @cast_list = CastingDirector.new(@actors, @characters).cast_parts
+    end
+
     erb :index
 end
 
 post '/' do 
-    if params["actors"].length != 0 && params["characters"].length != 0
+    if validate_params(params)
         @cast_list = CastingDirector.new(@actors, @characters).cast_parts
-        puts @cast_list
-        erb :index
     else
         @message = 'Please make sure you have at least 1 actor & character'
-        erb :index
     end
+
+    redirect to("/?actors=#{params['actors']}&characters=#{params['characters']}")
 end
