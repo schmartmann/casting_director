@@ -1,14 +1,18 @@
 require 'sinatra'
+require 'byebug' 
 require_relative 'casting_director'
+require './helpers/param_helper'
+
+include ParamHelper
 
 get '/' do
+    validate_params(params)
+    byebug
     erb :index
 end
 
 post '/' do 
     if params["actors"].length != 0 && params["characters"].length != 0
-        @actors = params["actors"].split(',').map {|name| name.strip}
-        @characters = params["characters"].split(',').map {|name| name.strip}
         @cast_list = CastingDirector.new(@actors, @characters).cast_parts
         puts @cast_list
         erb :index
