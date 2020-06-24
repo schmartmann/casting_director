@@ -5,21 +5,22 @@
 <form class="casting-form" id="form" role="form" method="POST" action="/">
     <span class="form-row">
         <label for="actors">Actors</label>
-        <input type="text" placeholder="Enter actors' names, separated by commas" name="actors" value="<%= @actors ? @actors.join(', '): 'Enter actors\' names, separated by commas' %>" />
+        <input type="text" placeholder="Enter actors' names, separated by commas" name="actors" value="<%= @actors ? @actors.join(', '): '' %>" />
     </span>
     <span class="form-row">
         <label for="characters">Characters</label>
-        <input type="text" placeholder="Enter characters' names, separated by commas" name="characters" value="<%= @characters ? @characters.join(', '): 'Enter characters\' names, separated by commas' %>"/>
+        <input type="text" placeholder="Enter characters' names, separated by commas" name="characters" value="<%= @characters ? @characters.join(', '): '' %>"/>
     </span>
     <span class="form-row">
         <button id="submit" type="submit">Submit</button>
     </span>
-    <div class="cast-list">
-        <% if @cast_list %>
+    <% if @cast_list %>
+        <div class="cast-list">
             <h4>Cast List</h4>
             <% @cast_list.each do |actor| %>
                 <p class="casting"><%= actor[1].join('/') %>: <%= actor[0] %></p>
             <% end %>
-        <% end %>
-    </div>
+        </div>
+    <% end %>
 </form>
+<script src="./index.js"></script>

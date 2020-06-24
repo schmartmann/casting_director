@@ -1,6 +1,6 @@
 module ParamHelper
     def validate_params(params)
-        if params["actors"].length != 0 && params["characters"].length != 0
+        if params["actors"] && params["actors"].length != 0 && params["characters"] && params["characters"].length != 0
             capture_params(params)
         else
             false
